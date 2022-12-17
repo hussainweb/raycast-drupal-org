@@ -12,14 +12,16 @@
   "license": "MIT",
   "commands": [
     {
-      "name": "index",
+      "name": "search-change-records",
       "title": "Search for Drupal change records",
       "description": "Search for changes in Drupal versions pulled from change records",
       "mode": "view"
     }
   ],
   "dependencies": {
-    "@raycast/api": "^1.44.0"
+    "@raycast/api": "^1.44.0",
+    "cheerio": "^1.0.0-rc.12",
+    "got": "^12.5.3"
   },
   "devDependencies": {
     "@types/node": "18.8.3",
