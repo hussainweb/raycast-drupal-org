@@ -9,28 +9,36 @@ export const getDrupalChangeRecords = async (searchContent: string) => {
   if (searchContent) {
     searchParams.keywords_description = searchContent;
   }
-  const { body } = await got(drupalCRSearchUrlBase, { searchParams: searchParams });
-  const $ = cheerioLoad(body);
-  const changes = $('.view-change-records tbody tr');
-
-  const records = changes.toArray().map((el) => {
-    const recordLink = $('td:nth-child(3)', el);
-    const recordUrl = $('a', recordLink).attr('href');
-    if (!recordUrl) {
-      return;
-    }
-    const recordNid = recordUrl.split('/').pop();
-    if (!recordNid) {
-      return;
-    }
-    const record: DrupalChangeRecord = {
-      created: new Date($('td:nth-child(2)', el).text()),
-      title: $('a', recordLink).text().trim(),
-      changeVersion: $('td:nth-child(1)', el).text().trim(),
-      id: recordNid,
-      url: recordUrl,
-    }
-    return record;
+  const { body } = await got(drupalCRSearchUrlBase, {
+    searchParams: searchParams,
+    headers: { "user-agent": "Raycast Drupal.org Extension" },
   });
+  const $ = cheerioLoad(body);
+  const changes = $(".view-change-records tbody tr");
+
+  const records = changes
+    .toArray()
+    .map((el) => {
+      const recordLink = $("td:nth-child(3)", el);
+      const recordUrl = $("a", recordLink).attr("href");
+      if (!recordUrl) {
+        return {} as DrupalChangeRecord;
+      }
+      const recordNid = recordUrl.split("/").pop();
+      if (!recordNid) {
+        return {} as DrupalChangeRecord;
+      }
+      const record: DrupalChangeRecord = {
+        created: new Date($("td:nth-child(2)", el).text()),
+        title: $("a", recordLink).text().trim(),
+        changeVersion: $("td:nth-child(1)", el).text().trim(),
+        id: recordNid,
+        url: recordUrl,
+      };
+      return record;
+    })
+    .filter((el) => {
+      return el.id ? true : false;
+    });
   return records;
 };

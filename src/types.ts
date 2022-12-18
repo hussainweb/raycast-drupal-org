@@ -7,7 +7,6 @@ export interface DrupalChangeRecord {
 }
 
 export interface SearchChangeRecordsState{
-  searchString?: string;
   records?: DrupalChangeRecord[];
   error?: Error;
 }
