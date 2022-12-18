@@ -1,4 +1,4 @@
-import { Icon, List } from "@raycast/api";
+import { Action, ActionPanel, Icon, List } from "@raycast/api";
 import { useEffect, useState } from "react";
 import { SearchChangeRecordsState } from "./types";
 import { getDrupalChangeRecords } from "./utils/do-change-record-api";
@@ -41,6 +41,13 @@ export default function Command() {
             { icon: Icon.Calendar, date: item.created },
             { icon: Icon.AtSymbol, text: item.changeVersion },
           ]}
+          actions={
+            <ActionPanel>
+              <Action.OpenInBrowser url={item.url} />
+              <Action.CopyToClipboard title="Copy URL to clipboard" content={item.url} />
+              <Action.CopyToClipboard title="Copy title to clipboard" content={item.title} />
+            </ActionPanel>
+          }
         />
       ))}
     </List>
