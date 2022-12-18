@@ -3,7 +3,7 @@
   "name": "drupal-org",
   "title": "drupal.org",
   "description": "Information from drupal.org",
-  "icon": "command-icon.png",
+  "icon": "drop-icon.png",
   "author": "hussainweb",
   "categories": [
     "Developer Tools",
