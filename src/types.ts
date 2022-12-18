@@ -6,7 +6,7 @@ export interface DrupalChangeRecord {
   url: string;
 }
 
-export interface SearchChangeRecordsState{
+export interface SearchChangeRecordsState {
   records?: DrupalChangeRecord[];
   error?: Error;
   loading?: boolean;
