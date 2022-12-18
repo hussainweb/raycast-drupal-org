@@ -1,4 +1,4 @@
-import { List } from "@raycast/api";
+import { Icon, List } from "@raycast/api";
 import { useEffect, useState } from "react";
 import { SearchChangeRecordsState } from "./types";
 import { getDrupalChangeRecords } from "./utils/do-change-record-api";
@@ -33,8 +33,15 @@ export default function Command() {
       throttle={true}
     >
       <List.EmptyView title={state.error ? "Error: " + state.error.message : ""}></List.EmptyView>
-      {state.records?.map((item, index) => (
-        <List.Item key={item.id} title={item.title} />
+      {state.records?.map((item) => (
+        <List.Item
+          key={item.id}
+          title={item.title}
+          accessories={[
+            { icon: Icon.Calendar, date: item.created },
+            { icon: Icon.AtSymbol, text: item.changeVersion },
+          ]}
+        />
       ))}
     </List>
   );
