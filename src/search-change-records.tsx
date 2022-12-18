@@ -10,8 +10,9 @@ export default function Command() {
   useEffect(() => {
     async function fetchRecords() {
       try {
+        setState({ records: state.records, loading: true });
         const feed = await getDrupalChangeRecords(searchText || "");
-        setState({ records: feed });
+        setState({ records: feed, loading: false });
       } catch (error) {
         console.error(error);
         setState({
@@ -25,7 +26,7 @@ export default function Command() {
 
   return (
     <List
-      isLoading={!state.records && !state.error}
+      isLoading={state.loading || (!state.records && !state.error)}
       searchBarPlaceholder={"Search for change records..."}
       searchText={searchText}
       onSearchTextChange={setSearchText}

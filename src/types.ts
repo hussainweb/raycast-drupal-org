@@ -9,4 +9,5 @@ export interface DrupalChangeRecord {
 export interface SearchChangeRecordsState{
   records?: DrupalChangeRecord[];
   error?: Error;
+  loading?: boolean;
 }
